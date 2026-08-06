@@ -1,0 +1,35 @@
+{
+  "name": "@lockally/vue",
+  "version": "0.1.0",
+  "description": "Official Lockally Vue 3 components — EmailComposer, ContactPicker, AttachmentUpload, TemplateSelector, SignaturePicker — with a secure token-based provider.",
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": false,
+  "repository": { "type": "git", "url": "https://github.com/LockallyInc/lockally-vue.git" },
+  "homepage": "https://lockally.com",
+  "keywords": ["lockally", "vue", "email", "components", "composer", "transactional"],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@lockally/ui-core": "^0.1.1"
+  },
+  "peerDependencies": {
+    "vue": ">=3.3"
+  },
+  "devDependencies": {
+    "@vue/test-utils": "^2.4.6",
+    "jsdom": "^25.0.0",
+    "typescript": "^5.7.0",
+    "vitest": "^2.1.0",
+    "vue": "^3.4.0"
+  }
+}

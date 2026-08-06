@@ -1,0 +1,35 @@
+# Release workflow for the TypeScript SDK (npm package `lockally`).
+#
+# TEMPLATE — inert in this monorepo. Copy to `.github/workflows/publish.yml`
+# in the SDK's own repo (the generated `sdk/typescript/` tree, pushed to
+# github.com/lockallyinc/lockally-js). Publishing is tag-driven: push `vX.Y.Z`.
+#
+# One-time setup in that repo:
+#   - Add repo secret NPM_TOKEN = an npm automation token for the `lockally`
+#     package (Settings → Secrets → Actions). Claude never handles this token.
+#   - The `id-token: write` permission below enables npm provenance (supply-chain
+#     attestation) — no extra secret needed.
+name: Publish npm
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: read
+  id-token: write   # npm provenance
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+      - run: npm install --no-audit --no-fund
+      - run: npm run build
+      - run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
